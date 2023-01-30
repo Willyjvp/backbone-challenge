@@ -16,36 +16,25 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
   const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 
   useEffect(() => {
-    if (contactList)
-      axios.get(
-        `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}`
-      ).then((response) => {
+    const fetchContacts = async () => {
+      try {
+        const { data } = await axios.get(
+          `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}`
+        );
         setLoading(true);
-        const { data } = response;
         const { results } = data;
         setContactList({ ...data, contactList: results });
-        setLoading(false);
-      }).catch((e) => {
-        console.log(e);
 
-      });
+      }
+      catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    };
+
+
+    fetchContacts();
   }, [CONTACT_API, contactList.currentPage, contactList.perPage]);
-
-  const fetchContacts = () => {
-    setLoading(true);
-    if (contactList)
-      axios.get(
-        `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}`
-      ).then((response) => {
-        const { data } = response;
-        const { results } = data;
-        setContactList({ ...data, contactList: results });
-        setLoading(false);
-      }).catch((e) => {
-        console.log(e);
-
-      });
-  };
 
   const changePage = (newPage: number) => {
     if (contactList)
