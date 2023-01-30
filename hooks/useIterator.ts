@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { ContactList } from '../models/contacts';
 
 
+const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
+
 const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: number) => void] => {
   const [contactList, setContactList] = useState<ContactList>({
     count: 1,
@@ -13,7 +15,6 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
   });
   const [loading, setLoading] = useState(true);
 
-  const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -34,7 +35,7 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
 
 
     fetchContacts();
-  }, [CONTACT_API, contactList.currentPage, contactList.perPage]);
+  }, [contactList.currentPage, contactList.perPage]);
 
   const changePage = (newPage: number) => {
     if (contactList)

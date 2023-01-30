@@ -4,6 +4,7 @@ import Head from 'next/head';
 import TurnLeftIcon from '@mui/icons-material/TurnLeft';
 import { theme } from '../styles/customTheme';
 import Link from 'next/link';
+import useIterator from '../hooks/useIterator';
 
 const Home: NextPage = () => {
   return (
