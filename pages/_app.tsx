@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <Container>
-            {pathname !== '/' && (
+            {pathname !== '/' && pathname !== '/contacts' && (
               <>
                 <Tooltip
                   title="Back"

@@ -75,7 +75,7 @@ const CreateContact = () => {
       <Typography variant="h4" alignSelf="center" mb={3} mt={10}>
         Create contact
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '60%' }}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column">
           <Box
             display="flex"
@@ -113,7 +113,17 @@ const CreateContact = () => {
             helperText={errors.phone?.message}
             label="Phone"
             variant="standard"
-            {...register('phone', { required: 'Phone is required' })}
+            {...register('phone', {
+              required: 'Phone is required',
+              maxLength: {
+                value: 10,
+                message: 'Phone is invalid (10 numbers max)',
+              },
+              pattern: {
+                value: /^([0-9]\d*)$/i,
+                message: 'Phone is invalid',
+              },
+            })}
             sx={{ mt: 3 }}
           />
           <TextField
