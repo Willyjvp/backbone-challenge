@@ -1,5 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
+import Router from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useAlertContext } from '../../context/AlertContext';
 import { useContactContext } from '../../context/ContactContext';
@@ -45,6 +46,8 @@ const CreateContact = () => {
         handleFilter('');
 
         reset();
+
+        Router.push('/contacts');
       } catch (error) {
         const err = error as AxiosError;
         if (err.response) {

@@ -1,4 +1,3 @@
-import { ContactList } from '../models/contacts';
 import {
   Table,
   TableBody,
