@@ -2,22 +2,15 @@ import {
   Box,
   Card,
   CardActions,
-  CardContent,
-  CardHeader,
   IconButton,
   Tooltip,
   Typography,
 } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { Contact } from '../../../models/contacts';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { useContactContext } from '../../../context/ContactContext';
-
-const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
+import CardHeaderContent from '../../../components/CardHeaderContent';
 
 const ViewContactPage = () => {
   const { singleContact } = useContactContext();
@@ -40,27 +33,7 @@ const ViewContactPage = () => {
             Contact
           </Typography>
           <Card sx={{ mt: '3rem' }}>
-            <CardHeader
-              avatar={
-                <AccountCircleIcon sx={{ fontSize: '4rem' }} color="primary" />
-              }
-              title={`${singleContact.firstName} ${singleContact.lastName}`}
-              subheader={`Phone: ${singleContact.phone}`}
-              titleTypographyProps={{ fontSize: '1.5rem' }}
-              subheaderTypographyProps={{ fontSize: '1.2rem' }}
-            />
-            <CardContent>
-              <Typography variant="body1" fontSize="1.2rem">
-                Email: {singleContact.email}
-              </Typography>
-              <Typography variant="body1" fontSize="1.2rem">
-                Created At: {new Date(singleContact.createdAt).toLocaleString()}
-              </Typography>
-              <Typography variant="body1" fontSize="1.2rem">
-                Last Update:{' '}
-                {new Date(singleContact.updatedAt).toLocaleString()}
-              </Typography>
-            </CardContent>
+            <CardHeaderContent singleContact={singleContact} />
             <CardActions sx={{ justifyContent: 'flex-end' }}>
               <Tooltip title="Edit">
                 <IconButton

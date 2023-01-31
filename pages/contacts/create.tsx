@@ -20,8 +20,6 @@ const CreateContact = () => {
     reset,
   } = useForm<FormData>();
 
-  // const { handleAlert } = useAlertContext();
-
   const onSubmit = (data: FormData) => {
     const { firstName, lastName, email, phone } = data;
 
