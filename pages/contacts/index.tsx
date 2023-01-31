@@ -11,12 +11,12 @@ function Contacts() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'start',
         alignItems: 'start',
         minHeight: '100vh',
       }}
     >
-      <Typography variant="h4" alignSelf="center" mb={3} mt={4}>
+      <Typography variant="h4" alignSelf="center" mb={3} mt={10}>
         Contacts
       </Typography>
       <Filter />

@@ -36,7 +36,7 @@ const ViewContactPage = () => {
     <Box maxWidth="700px">
       {singleContact !== undefined && (
         <>
-          <Typography variant="h4" mt={3}>
+          <Typography variant="h4" mt={10}>
             Contact
           </Typography>
           <Card sx={{ mt: '3rem' }}>
