@@ -81,20 +81,28 @@ export default function ContactsTable({
                     flexDirection: 'row',
                     alignItems: 'center',
                     cursor: 'pointer',
+                    overflow: 'hidden',
+                    width: { xs: '45vw', sm: '350px', md: '250px' },
                   }}
                 >
-                  <AccountCircleIcon fontSize="large" sx={{ mr: 2 }} />
-                  <div>
+                  <AccountCircleIcon
+                    fontSize="large"
+                    sx={{ mr: 2, display: { xs: 'none', sm: 'block' } }}
+                  />
+                  <Box>
                     <Typography variant="body1">
                       {`${item.firstName} ${item.lastName}`}
                     </Typography>
                     <Typography variant="body2" sx={{ opacity: '70%' }}>
                       {item.email}
                     </Typography>
-                  </div>
+                  </Box>
                 </Box>
               </TableCell>
-              <TableCell align="right">
+              <TableCell
+                align="right"
+                sx={{ width: { xs: '20vw', sm: 'auto' } }}
+              >
                 <Tooltip title="Edit">
                   <IconButton
                     color="success"
