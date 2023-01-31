@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   title="Back"
                   sx={{ position: 'absolute', left: '20px', top: '20px' }}
                 >
-                  <IconButton onClick={() => router.back()}>
+                  <IconButton onClick={() => router.push('/contacts')}>
                     <ArrowBackIosNewRoundedIcon />
                   </IconButton>
                 </Tooltip>
