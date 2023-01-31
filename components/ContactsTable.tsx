@@ -53,9 +53,8 @@ export default function ContactsTable({
   };
 
   const handleActionContact = (action: string, id: string) => {
-    if (action === 'view') {
-      handleSingleContact(id);
-    }
+    handleSingleContact(id);
+
     router.push({
       pathname: `/contacts/[id]${action === 'view' ? '' : `/${action}`}`,
       query: { id: id },
