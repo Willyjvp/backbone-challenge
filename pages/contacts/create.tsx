@@ -2,6 +2,7 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useAlertContext } from '../../context/AlertContext';
+import { useContactContext } from '../../context/ContactContext';
 
 type FormData = {
   firstName: string;
@@ -12,6 +13,7 @@ type FormData = {
 
 const CreateContact = () => {
   const { handleAlert } = useAlertContext();
+  const { handleFilter } = useContactContext();
 
   const {
     register,
@@ -39,6 +41,8 @@ const CreateContact = () => {
           type: 'success',
           show: true,
         });
+
+        handleFilter('');
 
         reset();
       } catch (error) {

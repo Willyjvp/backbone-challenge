@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Contact, ContactList } from '../models/contacts';
+import { useAlertContext } from './AlertContext';
 
 type ContactContextType = {
   isLoading: boolean;
@@ -44,6 +45,7 @@ export const ContactContextProvider = ({ children }: any) => {
     createdAt: '',
     updatedAt: '',
   });
+
   const [contactList, setContactList] = useState<ContactList>({
     count: 1,
     perPage: 10,
@@ -51,6 +53,8 @@ export const ContactContextProvider = ({ children }: any) => {
     totalPages: 1,
     contacts: [],
   });
+
+  const { handleAlert } = useAlertContext();
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -63,7 +67,11 @@ export const ContactContextProvider = ({ children }: any) => {
         delete data.results;
         setContactList({ ...data, contacts: results });
       } catch (error) {
-        console.log(error);
+        handleAlert({
+          message: 'Internal error',
+          type: 'error',
+          show: true,
+        });
       }
       setIsLoading(false);
     };
@@ -81,7 +89,11 @@ export const ContactContextProvider = ({ children }: any) => {
       delete data.results;
       setContactList({ ...data, contacts: results });
     } catch (error) {
-      console.log(error);
+      handleAlert({
+        message: 'Internal error',
+        type: 'error',
+        show: true,
+      });
     }
     setIsLoading(false);
   };
