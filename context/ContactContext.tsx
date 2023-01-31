@@ -73,10 +73,10 @@ export const ContactContextProvider = ({ children }: any) => {
 
   const handleFilter = async (filter: string) => {
     try {
-      setIsLoading(true);
       const { data } = await axios.get(
         `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}&email_contains=${filter}`
       );
+      setIsLoading(true);
       const { results } = data;
       delete data.results;
       setContactList({ ...data, contacts: results });

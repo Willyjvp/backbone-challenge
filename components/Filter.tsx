@@ -1,25 +1,36 @@
+import { Box, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useContactContext } from '../context/ContactContext';
 
 const Filter = () => {
   const [textFilter, setTextFilter] = useState('');
   const { handleFilter } = useContactContext();
+  let shouldFilter = true;
 
   const handleInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTextFilter(e.target.value);
-    if (e.target.value.length >= 3) {
-      handleFilter(e.target.value);
+    let text = e.target.value;
+    setTextFilter(text);
+
+    if (text.length > 2 && shouldFilter) {
+      shouldFilter = true;
+      handleFilter(text);
     }
-    if (e.target.value.length < 3) {
-      // handleFilter('');
+    if (text.length <= 2 && shouldFilter) {
+      shouldFilter = false;
+      handleFilter('');
     }
   };
 
   return (
-    <div>
-      Filter
-      <input value={textFilter} onChange={handleInput}></input>
-    </div>
+    <Box display="flex" my={2}>
+      <TextField
+        label="Search by email"
+        variant="standard"
+        value={textFilter}
+        onChange={handleInput}
+        sx={{ minWidth: '40vw' }}
+      ></TextField>
+    </Box>
   );
 };
 

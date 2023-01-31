@@ -90,7 +90,7 @@ export default function ContactsTable({
                       {`${item.firstName} ${item.lastName}`}
                     </Typography>
                     <Typography variant="body2" sx={{ opacity: '70%' }}>
-                      {item.phone}
+                      {item.email}
                     </Typography>
                   </div>
                 </Box>
