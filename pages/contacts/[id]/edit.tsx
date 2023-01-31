@@ -124,7 +124,17 @@ const EditContact = () => {
             helperText={errors.phone?.message}
             label="Phone"
             variant="standard"
-            {...register('phone', { required: 'Phone is required' })}
+            {...register('phone', {
+              required: 'Phone is required',
+              maxLength: {
+                value: 10,
+                message: 'Phone is invalid (10 numbers max)',
+              },
+              pattern: {
+                value: /^([0-9]\d*)$/i,
+                message: 'Phone is invalid',
+              },
+            })}
             sx={{ mt: 3 }}
           />
           <TextField
