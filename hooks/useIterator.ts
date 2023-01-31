@@ -11,7 +11,7 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
     perPage: 10,
     currentPage: 1,
     totalPages: 1,
-    contactList: [],
+    contacts: [],
   });
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +24,8 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
         );
         setLoading(true);
         const { results } = data;
-        setContactList({ ...data, contactList: results });
+        delete data.results;
+        setContactList({ ...data, contacts: results });
 
       }
       catch (error) {

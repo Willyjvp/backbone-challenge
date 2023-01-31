@@ -1,9 +1,11 @@
 import { Container, Typography } from '@mui/material';
 import useIterator from '../../hooks/useIterator';
 import ContactsTable from '../../components/ContactsTable';
+import { useContactContext } from '../../context/ContactContext';
 
 function Contacts() {
-  const [contactList, loading, changePage, changeRowsPerPage] = useIterator();
+  const { isLoading, changePage, changeRowsPerPage } =
+    useContactContext();
 
   return (
     <Container
@@ -18,11 +20,10 @@ function Contacts() {
       <Typography variant="h4" alignSelf="center" mb={3}>
         Contacts
       </Typography>
-      {loading ? (
+      {isLoading ? (
         <h1>Loading...</h1>
       ) : (
         <ContactsTable
-          contactObject={contactList}
           setPage={changePage}
           setRowsPerPage={changeRowsPerPage}
         />

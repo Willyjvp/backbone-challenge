@@ -13,5 +13,16 @@ export interface ContactList {
   perPage: number;
   currentPage: number;
   totalPages: number;
-  contactList: Contact[];
+  contacts: Contact[];
+}
+
+export interface ContactState {
+  contactList: ContactList;
+  singleContact: Contact;
+  loading: boolean;
+}
+
+export interface ContactAction {
+  type: string;
+  payload: ContactState;
 }

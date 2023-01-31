@@ -17,22 +17,21 @@ import {
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+import { useContactContext } from '../context/ContactContext';
 
 interface ContactsTableProps {
-  contactObject: ContactList;
   setPage: (page: number) => void;
   setRowsPerPage: (rows: number) => void;
 }
 
 export default function ContactsTable({
-  contactObject,
   setPage,
   setRowsPerPage,
 }: ContactsTableProps) {
-  const { count, perPage, currentPage, totalPages, contactList } =
-    contactObject;
+  const { contactList, handleSingleContact } = useContactContext();
+
+  const { count, perPage, currentPage, totalPages, contacts } = contactList;
 
   const router = useRouter();
 
@@ -54,6 +53,9 @@ export default function ContactsTable({
   };
 
   const handleActionContact = (action: string, id: string) => {
+    if (action === 'view') {
+      handleSingleContact(id);
+    }
     router.push({
       pathname: `/contacts/[id]${action === 'view' ? '' : `/${action}`}`,
       query: { id: id },
@@ -62,7 +64,7 @@ export default function ContactsTable({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+      <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -70,7 +72,7 @@ export default function ContactsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {contactList.map((item) => (
+          {contacts.map((item) => (
             <TableRow key={item.id}>
               <TableCell align="left">
                 <Box
