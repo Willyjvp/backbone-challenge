@@ -5,7 +5,7 @@ import { ContactList } from '../models/contacts';
 
 const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 
-const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: number) => void] => {
+export const useIterators = (): [ContactList, boolean, (page: number) => void, (rows: number) => void] => {
   const [contactList, setContactList] = useState<ContactList>({
     count: 1,
     perPage: 10,
@@ -55,5 +55,3 @@ const useIterator = (): [ContactList, boolean, (page: number) => void, (rows: nu
     changeRowsPerPage,
   ];
 };
-
-export default useIterator;

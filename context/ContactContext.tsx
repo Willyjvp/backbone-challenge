@@ -9,6 +9,7 @@ type ContactContextType = {
   changePage: (page: number) => void;
   changeRowsPerPage: (row: number) => void;
   handleSingleContact: (id: string) => void;
+  handleFilter: (filter: string) => void;
 };
 
 const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
@@ -25,6 +26,7 @@ const ContactContext = createContext<ContactContextType>({
   changePage: (page: number) => {},
   changeRowsPerPage: (row: number) => {},
   handleSingleContact: (id: string) => {},
+  handleFilter: (filter: string) => {},
 });
 
 export const useContactContext = () => {
@@ -69,6 +71,21 @@ export const ContactContextProvider = ({ children }: any) => {
     fetchContacts();
   }, [contactList.currentPage, contactList.perPage]);
 
+  const handleFilter = async (filter: string) => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get(
+        `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}&email_contains=${filter}`
+      );
+      const { results } = data;
+      delete data.results;
+      setContactList({ ...data, contacts: results });
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const changePage = (newPage: number) => {
     if (contactList)
       setContactList((prev) => ({ ...prev, currentPage: newPage }));
@@ -92,6 +109,7 @@ export const ContactContextProvider = ({ children }: any) => {
         changePage,
         changeRowsPerPage,
         handleSingleContact,
+        handleFilter,
       }}
     >
       {children}
