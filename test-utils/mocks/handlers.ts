@@ -1,7 +1,5 @@
 import { rest } from 'msw';
 
-const CONTACT_API = 'https://api.backbonechallenge.app';
-
 export const handlers = [
   rest.get(`http://localhost/undefined/contacts`, (req, res, ctx) => {
     const perPage = req.url.searchParams.get('perPage');
