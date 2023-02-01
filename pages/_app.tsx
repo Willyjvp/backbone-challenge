@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
 import Head from 'next/head';
 import { theme } from '../styles/customTheme';
-import { Alert, Container, Fab, IconButton, Tooltip } from '@mui/material';
+import { Container, Fab, IconButton, Tooltip } from '@mui/material';
 import { ContactContextProvider } from '../context/ContactContext';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';

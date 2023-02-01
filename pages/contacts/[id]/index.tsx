@@ -6,7 +6,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { useContactContext } from '../../../context/ContactContext';
