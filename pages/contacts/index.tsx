@@ -3,7 +3,7 @@ import ContactsTable from '../../components/ContactsTable';
 import Filter from '../../components/Filter';
 import { useContactContext } from '../../context/ContactContext';
 
-function Contacts() {
+const Contacts = () => {
   const { isLoading, changePage, changeRowsPerPage } = useContactContext();
 
   return (
@@ -30,6 +30,6 @@ function Contacts() {
       )}
     </Container>
   );
-}
+};
 
 export default Contacts;
