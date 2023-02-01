@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useContactContext } from '../context/ContactContext';
 
@@ -28,7 +28,7 @@ const Filter = () => {
         variant="standard"
         value={textFilter}
         onChange={handleInput}
-        sx={{ minWidth: '40vw' }}
+        sx={{ minWidth: { xs: '80vw', sm: '60vw' } }}
       ></TextField>
     </Box>
   );

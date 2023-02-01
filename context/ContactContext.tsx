@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Contact, ContactList } from '../models/contacts';
 import { useAlertContext } from './AlertContext';
@@ -62,8 +62,6 @@ export const ContactContextProvider = ({ children }: any) => {
         const { data } = await axios.get(
           `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}`
         );
-
-        // const { data } = await axios.get('http://localhost:3030/contacts');
         setIsLoading(true);
         const { results } = data;
         delete data.results;
@@ -79,6 +77,7 @@ export const ContactContextProvider = ({ children }: any) => {
     };
 
     fetchContacts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contactList.currentPage, contactList.perPage]);
 
   const handleFilter = async (filter: string) => {
