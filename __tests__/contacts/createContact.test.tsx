@@ -1,13 +1,8 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import Contacts from '../../pages/contacts';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import {
-  ContactContext,
-  ContactContextProvider,
-} from '../../context/ContactContext';
+import { ContactContext } from '../../context/ContactContext';
 import userEvent from '@testing-library/user-event';
 import CreateContact from '../../pages/contacts/create';
-import { logRoles } from '@testing-library/dom';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -125,7 +120,7 @@ describe('Create Page', () => {
     expect(screen.queryByText('Email is invalid')).not.toBeInTheDocument();
   });
 
-  it.only('Create a new Contact with errors', async () => {
+  it('Create a new Contact with errors', async () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: '/contacts/create',
       push: '/contacts/create',

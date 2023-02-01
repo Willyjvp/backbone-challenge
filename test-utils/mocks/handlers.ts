@@ -134,5 +134,10 @@ export const handlers = [
     return res(
       ctx.status(200)
     );
+  }),
+  rest.delete(`http://localhost/undefined/contacts/63b73e3e2c3946770b3926d3`, (req, res, ctx) => {
+    return res(
+      ctx.status(200)
+    );
   })
 ];
