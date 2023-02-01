@@ -15,7 +15,7 @@ type ContactContextType = {
 
 const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 
-const ContactContext = createContext<ContactContextType>({
+export const ContactContext = createContext<ContactContextType>({
   isLoading: false,
   contactList: {
     count: 1,
@@ -62,6 +62,8 @@ export const ContactContextProvider = ({ children }: any) => {
         const { data } = await axios.get(
           `${CONTACT_API}/contacts?_sort=createdAt:DESC&page=${contactList.currentPage}&perPage=${contactList.perPage}`
         );
+
+        // const { data } = await axios.get('http://localhost:3030/contacts');
         setIsLoading(true);
         const { results } = data;
         delete data.results;
