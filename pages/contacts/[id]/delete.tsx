@@ -12,6 +12,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import axios, { AxiosError } from 'axios';
 import { useAlertContext } from '../../../context/AlertContext';
 import CardHeaderContent from '../../../components/CardHeaderContent';
+import { useEffect } from 'react';
 
 const DeleteContact = () => {
   const { singleContact, handleFilter } = useContactContext();
@@ -19,6 +20,12 @@ const DeleteContact = () => {
 
   const router = useRouter();
   const { id } = router.query as { id: string };
+
+  useEffect(() => {
+    if (singleContact?.firstName === '') router.push('/contacts');
+  });
+
+  if (singleContact?.firstName === '') return <></>;
 
   const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 

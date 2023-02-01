@@ -19,16 +19,18 @@ const ViewContactPage = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };
 
-  useEffect(() => {
-    if (singleContact?.firstName === '') router.push('/contacts');
-  });
-
   const handleActionContact = (action: string, id: string) => {
     router.push({
       pathname: `/contacts/[id]/${action}`,
       query: { id: id },
     });
   };
+
+  useEffect(() => {
+    if (singleContact?.firstName === '') router.push('/contacts');
+  });
+
+  if (singleContact?.firstName === '') return <></>;
 
   return (
     <Box maxWidth="700px">

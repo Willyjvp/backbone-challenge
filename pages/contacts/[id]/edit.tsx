@@ -1,16 +1,10 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import ContactForm, { FormData } from '../../../components/ContactForm';
 import { useAlertContext } from '../../../context/AlertContext';
 import { useContactContext } from '../../../context/ContactContext';
-
-type FormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-};
 
 const EditContact = () => {
   const { singleContact, handleFilter } = useContactContext();
@@ -19,32 +13,38 @@ const EditContact = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>({
-    defaultValues: {
-      firstName: singleContact?.firstName,
-      lastName: singleContact?.lastName,
-      email: singleContact?.email,
-      phone: singleContact?.phone,
-    },
+  useEffect(() => {
+    if (singleContact?.firstName === '') router.push('/contacts');
   });
+
+  if (singleContact?.firstName === '') return <></>;
 
   const onSubmit = (data: FormData) => {
     const { firstName, lastName, email, phone } = data;
+    const requestArray: { [key: string]: any } = [];
+
+    if (firstName !== singleContact?.firstName)
+      requestArray.firstName = firstName;
+    if (lastName !== singleContact?.lastName) requestArray.lastName = lastName;
+    if (phone !== singleContact?.phone) requestArray.phone = phone;
+    if (email !== singleContact?.email) requestArray.email = email;
+
+    if (Object.values(requestArray).length === 0) {
+      handleAlert({
+        message: 'Nothing was changed',
+        type: 'info',
+        show: true,
+      });
+
+      return;
+    }
 
     const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
 
     const postContact = async () => {
       try {
         await axios.put(`${CONTACT_API}/contacts/${id}`, {
-          firstName,
-          lastName,
-          email,
-          phone,
+          ...requestArray,
         });
 
         handleAlert({
@@ -86,80 +86,11 @@ const EditContact = () => {
       <Typography variant="h4" alignSelf="center" mb={3} mt={10}>
         Edit contact
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '60%' }}>
-        <Box display="flex" flexDirection="column">
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            flexWrap="wrap"
-          >
-            <TextField
-              error={errors.firstName !== undefined}
-              helperText={errors.firstName?.message}
-              label="First name"
-              variant="standard"
-              {...register('firstName', { required: 'First name is required' })}
-              sx={{
-                width: { xs: '100%', sm: '45%' },
-                minWidth: '150px',
-                mt: 3,
-              }}
-            />
-            <TextField
-              error={errors.lastName !== undefined}
-              helperText={errors.lastName?.message}
-              label="Last name"
-              variant="standard"
-              {...register('lastName', { required: 'Last name is required' })}
-              sx={{
-                width: { xs: '100%', sm: '45%' },
-                minWidth: '150px',
-                mt: 3,
-              }}
-            />
-          </Box>
-          <TextField
-            error={errors.phone !== undefined}
-            helperText={errors.phone?.message}
-            label="Phone"
-            variant="standard"
-            {...register('phone', {
-              required: 'Phone is required',
-              maxLength: {
-                value: 10,
-                message: 'Phone is invalid (10 numbers max)',
-              },
-              pattern: {
-                value: /^([0-9]\d*)$/i,
-                message: 'Phone is invalid',
-              },
-            })}
-            sx={{ mt: 3 }}
-          />
-          <TextField
-            error={errors.email !== undefined}
-            helperText={errors.email?.message}
-            label="Email"
-            variant="standard"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email',
-              },
-            })}
-            sx={{ mt: 3 }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ alignSelf: 'flex-end', width: '120px', mt: 3 }}
-          >
-            Update
-          </Button>
-        </Box>
-      </form>
+      <ContactForm
+        actionType="Update"
+        onSubmit={onSubmit}
+        singleContact={singleContact}
+      />
     </Container>
   );
 };
