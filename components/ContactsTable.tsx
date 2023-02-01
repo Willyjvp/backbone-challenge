@@ -60,6 +60,20 @@ export default function ContactsTable({
     });
   };
 
+  function defaultLabelDisplayedRows({
+    from,
+    to,
+    count,
+  }: {
+    from: number;
+    to: number;
+    count: number;
+  }) {
+    if (currentPage && totalPages)
+      return `Page ${currentPage} of ${totalPages}`;
+    return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="custom pagination table">
@@ -125,6 +139,8 @@ export default function ContactsTable({
         <TableFooter>
           <TableRow>
             <TablePagination
+              labelRowsPerPage="Rows"
+              labelDisplayedRows={defaultLabelDisplayedRows}
               rowsPerPageOptions={[5, 10, 25]}
               colSpan={3}
               count={count}

@@ -1,7 +1,5 @@
 import { rest } from 'msw';
 
-const CONTACT_API = 'https://api.backbonechallenge.app';
-
 export const handlers = [
   rest.get(`http://localhost/undefined/contacts`, (req, res, ctx) => {
     const perPage = req.url.searchParams.get('perPage');
@@ -129,4 +127,15 @@ export const handlers = [
         }
       )
     );
-  }),];
+  }),
+  rest.post(`http://localhost/undefined/contacts`, (req, res, ctx) => {
+    return res(
+      ctx.status(200)
+    );
+  }),
+  rest.delete(`http://localhost/undefined/contacts/63b73e3e2c3946770b3926d3`, (req, res, ctx) => {
+    return res(
+      ctx.status(200)
+    );
+  })
+];
