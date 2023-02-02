@@ -48,6 +48,8 @@ describe('Delete Page', () => {
           changeRowsPerPage: () => {},
           handleSingleContact: () => {},
           handleFilter: () => {},
+          filterText: '',
+          setStateFilterText: () => {},
         }}
       >
         <Provider store={store}>

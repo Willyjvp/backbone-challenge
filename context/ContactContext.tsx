@@ -14,6 +14,8 @@ type ContactContextType = {
   changeRowsPerPage: (row: number) => void;
   handleSingleContact: (id: string) => void;
   handleFilter: (filter: string) => void;
+  filterText: string;
+  setStateFilterText: (text: string) => void;
 };
 
 const CONTACT_API = process.env.NEXT_PUBLIC_CONTACTS_API;
@@ -31,6 +33,8 @@ export const ContactContext = createContext<ContactContextType>({
   changeRowsPerPage: (row: number) => {},
   handleSingleContact: (id: string) => {},
   handleFilter: (filter: string) => {},
+  filterText: '',
+  setStateFilterText: (text: string) => {},
 });
 
 export const useContactContext = () => {
@@ -43,6 +47,8 @@ export const ContactContextProvider = ({ children }: any) => {
   const [handleTimeoutAlert] = useTimeoutAlert();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [filterText, setFilterText] = useState('');
+
   const [singleContact, setSingleContact] = useState<Contact>({
     id: '',
     firstName: '',
@@ -126,6 +132,10 @@ export const ContactContextProvider = ({ children }: any) => {
     if (item) setSingleContact(item[0]);
   };
 
+  const setStateFilterText = (text: string) => {
+    setFilterText(text);
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -136,6 +146,8 @@ export const ContactContextProvider = ({ children }: any) => {
         changeRowsPerPage,
         handleSingleContact,
         handleFilter,
+        filterText,
+        setStateFilterText,
       }}
     >
       {children}

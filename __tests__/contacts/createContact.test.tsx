@@ -33,6 +33,8 @@ describe('Create Page', () => {
           changeRowsPerPage: () => {},
           handleSingleContact: () => {},
           handleFilter: () => {},
+          filterText: '',
+          setStateFilterText: () => {},
         }}
       >
         <Provider store={store}>
@@ -81,6 +83,8 @@ describe('Create Page', () => {
           changeRowsPerPage: () => {},
           handleSingleContact: () => {},
           handleFilter: () => {},
+          filterText: '',
+          setStateFilterText: () => {},
         }}
       >
         <Provider store={store}>
@@ -150,6 +154,8 @@ describe('Create Page', () => {
           changeRowsPerPage: () => {},
           handleSingleContact: () => {},
           handleFilter: () => {},
+          filterText: '',
+          setStateFilterText: () => {},
         }}
       >
         <Provider store={store}>

@@ -43,6 +43,8 @@ describe('Contacs Page', () => {
           changeRowsPerPage: () => {},
           handleSingleContact: () => {},
           handleFilter: () => {},
+          filterText: '',
+          setStateFilterText: () => {},
         }}
       >
         <Provider store={store}>
