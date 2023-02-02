@@ -2,12 +2,15 @@ import { Container, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import Router from 'next/router';
 import ContactForm, { FormData } from '../../components/ContactForm';
-import { useAlertContext } from '../../context/AlertContext';
 import { useContactContext } from '../../context/ContactContext';
+import { AlertType, showAlert } from '../../context/state/alert.slice';
+import { useAppDispatch } from '../../context/state/hooks';
+import { useTimeoutAlert } from '../../hooks/useTimeout';
 
 const CreateContact = () => {
-  const { handleAlert } = useAlertContext();
   const { handleFilter } = useContactContext();
+  const [handleTimeoutAlert] = useTimeoutAlert();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: FormData) => {
     const { firstName, lastName, email, phone } = data;
@@ -23,11 +26,15 @@ const CreateContact = () => {
           phone,
         });
 
-        handleAlert({
-          message: 'Contact was created!',
-          type: 'success',
-          show: true,
-        });
+        dispatch(
+          showAlert({
+            show: true,
+            message: 'Contact was created!',
+            type: AlertType.SUCCESS,
+          })
+        );
+
+        handleTimeoutAlert(3);
 
         handleFilter('');
 
@@ -37,11 +44,15 @@ const CreateContact = () => {
         if (err.response) {
           const { message } = err.response.data as { message: string };
 
-          handleAlert({
-            message: message,
-            type: 'error',
-            show: true,
-          });
+          dispatch(
+            showAlert({
+              show: true,
+              message: message,
+              type: AlertType.ERROR,
+            })
+          );
+
+          handleTimeoutAlert(3);
         }
       }
     };

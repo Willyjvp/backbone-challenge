@@ -10,13 +10,16 @@ import { useRouter } from 'next/router';
 import { useContactContext } from '../../../context/ContactContext';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import axios, { AxiosError } from 'axios';
-import { useAlertContext } from '../../../context/AlertContext';
 import CardHeaderContent from '../../../components/CardHeaderContent';
 import { useEffect } from 'react';
+import { useAppDispatch } from '../../../context/state/hooks';
+import { AlertType, showAlert } from '../../../context/state/alert.slice';
+import { useTimeoutAlert } from '../../../hooks/useTimeout';
 
 const DeleteContact = () => {
   const { singleContact, handleFilter } = useContactContext();
-  const { handleAlert } = useAlertContext();
+  const dispatch = useAppDispatch();
+  const [handleTimeoutAlert] = useTimeoutAlert();
 
   const router = useRouter();
   const { id } = router.query as { id: string };
@@ -33,11 +36,15 @@ const DeleteContact = () => {
     try {
       await axios.delete(`${CONTACT_API}/contacts/${id}`);
 
-      handleAlert({
-        message: 'Contact was deleted!',
-        type: 'success',
-        show: true,
-      });
+      dispatch(
+        showAlert({
+          show: true,
+          message: 'Contact deleted',
+          type: AlertType.INFO,
+        })
+      );
+
+      handleTimeoutAlert(3);
 
       handleFilter('');
 
@@ -47,11 +54,15 @@ const DeleteContact = () => {
       if (err.response) {
         const { message } = err.response.data as { message: string };
 
-        handleAlert({
-          message: message,
-          type: 'error',
-          show: true,
-        });
+        dispatch(
+          showAlert({
+            show: true,
+            message: message,
+            type: AlertType.ERROR,
+          })
+        );
+
+        handleTimeoutAlert(3);
       }
     }
   };

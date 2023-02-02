@@ -3,12 +3,15 @@ import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ContactForm, { FormData } from '../../../components/ContactForm';
-import { useAlertContext } from '../../../context/AlertContext';
 import { useContactContext } from '../../../context/ContactContext';
+import { AlertType, showAlert } from '../../../context/state/alert.slice';
+import { useAppDispatch } from '../../../context/state/hooks';
+import { useTimeoutAlert } from '../../../hooks/useTimeout';
 
 const EditContact = () => {
   const { singleContact, handleFilter } = useContactContext();
-  const { handleAlert } = useAlertContext();
+  const dispatch = useAppDispatch();
+  const [handleTimeoutAlert] = useTimeoutAlert();
 
   const router = useRouter();
   const { id } = router.query as { id: string };
@@ -30,11 +33,15 @@ const EditContact = () => {
     if (email !== singleContact?.email) requestArray.email = email;
 
     if (Object.values(requestArray).length === 0) {
-      handleAlert({
-        message: 'Nothing was changed',
-        type: 'info',
-        show: true,
-      });
+      dispatch(
+        showAlert({
+          show: true,
+          message: 'No changes were made',
+          type: AlertType.INFO,
+        })
+      );
+
+      handleTimeoutAlert(3);
 
       return;
     }
@@ -47,11 +54,15 @@ const EditContact = () => {
           ...requestArray,
         });
 
-        handleAlert({
-          message: 'Contact was edited!',
-          type: 'success',
-          show: true,
-        });
+        dispatch(
+          showAlert({
+            show: true,
+            message: 'Contact was edited!',
+            type: AlertType.SUCCESS,
+          })
+        );
+
+        handleTimeoutAlert(3);
 
         handleFilter('');
 
@@ -61,11 +72,15 @@ const EditContact = () => {
         if (err.response) {
           const { message } = err.response.data as { message: string };
 
-          handleAlert({
-            message: message,
-            type: 'error',
-            show: true,
-          });
+          dispatch(
+            showAlert({
+              show: true,
+              message: message,
+              type: AlertType.ERROR,
+            })
+          );
+
+          handleTimeoutAlert(3);
         }
       }
     };

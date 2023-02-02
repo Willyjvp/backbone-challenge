@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { ContactContext } from '../../context/ContactContext';
 import userEvent from '@testing-library/user-event';
 import CreateContact from '../../pages/contacts/create';
+import store from '../../context/state/store';
+import { Provider } from 'react-redux';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -33,7 +35,9 @@ describe('Create Page', () => {
           handleFilter: () => {},
         }}
       >
-        <CreateContact />
+        <Provider store={store}>
+          <CreateContact />
+        </Provider>
       </ContactContext.Provider>
     );
 
@@ -79,7 +83,9 @@ describe('Create Page', () => {
           handleFilter: () => {},
         }}
       >
-        <CreateContact />
+        <Provider store={store}>
+          <CreateContact />
+        </Provider>
       </ContactContext.Provider>
     );
 
@@ -146,7 +152,9 @@ describe('Create Page', () => {
           handleFilter: () => {},
         }}
       >
-        <CreateContact />
+        <Provider store={store}>
+          <CreateContact />
+        </Provider>
       </ContactContext.Provider>
     );
 
