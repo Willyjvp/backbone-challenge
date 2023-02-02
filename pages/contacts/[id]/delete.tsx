@@ -17,7 +17,7 @@ import { AlertType, showAlert } from '../../../context/state/alert.slice';
 import { useTimeoutAlert } from '../../../hooks/useTimeout';
 
 const DeleteContact = () => {
-  const { singleContact, handleFilter } = useContactContext();
+  const { singleContact, handleFilter, setStateFilterText } = useContactContext();
   const dispatch = useAppDispatch();
   const [handleTimeoutAlert] = useTimeoutAlert();
 
@@ -46,6 +46,7 @@ const DeleteContact = () => {
 
       handleTimeoutAlert(3);
 
+      setStateFilterText('');
       handleFilter('');
 
       router.push('/contacts');
