@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { useContactContext } from '../context/ContactContext';
 
 const Filter = () => {
-  const [textFilter, setTextFilter] = useState('');
-  const { handleFilter } = useContactContext();
+  // const [textFilter, setTextFilter] = useState('');
+  const { handleFilter, filterText, setStateFilterText } = useContactContext();
   let shouldFilter = true;
 
   const handleInput: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     let text = e.target.value;
-    setTextFilter(text);
+    setStateFilterText(text);
 
     if (text.length > 2 && shouldFilter) {
       shouldFilter = true;
@@ -26,7 +26,7 @@ const Filter = () => {
       <TextField
         label="Search by email"
         variant="standard"
-        value={textFilter}
+        value={filterText}
         onChange={handleInput}
         sx={{ minWidth: { xs: '80vw', sm: '60vw' } }}
       ></TextField>
