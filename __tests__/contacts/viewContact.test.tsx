@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { ContactContext } from '../../context/ContactContext';
+import store from '../../context/state/store';
+import { Provider } from 'react-redux';
 import ViewContactPage from '../../pages/contacts/[id]';
 
 jest.mock('next/router', () => ({
@@ -43,7 +45,9 @@ describe('Contacs Page', () => {
           handleFilter: () => {},
         }}
       >
-        <ViewContactPage />
+        <Provider store={store}>
+          <ViewContactPage />
+        </Provider>
       </ContactContext.Provider>
     );
 

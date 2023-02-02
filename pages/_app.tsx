@@ -8,14 +8,15 @@ import { ContactContextProvider } from '../context/ContactContext';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import { AlertContextProvider } from '../context/AlertContext';
+import { Provider } from 'react-redux';
+import store from '../context/state/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { pathname } = router;
 
   return (
-    <AlertContextProvider>
+    <Provider store={store}>
       <ContactContextProvider>
         <ThemeProvider theme={theme}>
           <Head>
@@ -57,7 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Container>
         </ThemeProvider>
       </ContactContextProvider>
-    </AlertContextProvider>
+    </Provider>
   );
 }
 

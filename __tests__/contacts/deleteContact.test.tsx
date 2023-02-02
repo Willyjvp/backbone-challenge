@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import { ContactContext } from '../../context/ContactContext';
 import userEvent from '@testing-library/user-event';
 import DeleteContact from '../../pages/contacts/[id]/delete';
-import { AlertContextProvider } from '../../context/AlertContext';
+import { Provider } from 'react-redux';
+import store from '../../context/state/store';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -49,9 +50,9 @@ describe('Delete Page', () => {
           handleFilter: () => {},
         }}
       >
-        <AlertContextProvider>
+        <Provider store={store}>
           <DeleteContact />
-        </AlertContextProvider>
+        </Provider>
       </ContactContext.Provider>
     );
 

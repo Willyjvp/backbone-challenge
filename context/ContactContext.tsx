@@ -1,7 +1,10 @@
+import { Alert } from '@mui/material';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useTimeoutAlert } from '../hooks/useTimeout';
 import { Contact, ContactList } from '../models/contacts';
-import { useAlertContext } from './AlertContext';
+import { AlertType, showAlert } from './state/alert.slice';
+import { useAppDispatch, useAppSelector } from './state/hooks';
 
 type ContactContextType = {
   isLoading: boolean;
@@ -35,6 +38,10 @@ export const useContactContext = () => {
 };
 
 export const ContactContextProvider = ({ children }: any) => {
+  const alert = useAppSelector((state) => state.alert);
+  const dispatch = useAppDispatch();
+  const [handleTimeoutAlert] = useTimeoutAlert();
+
   const [isLoading, setIsLoading] = useState(false);
   const [singleContact, setSingleContact] = useState<Contact>({
     id: '',
@@ -54,8 +61,6 @@ export const ContactContextProvider = ({ children }: any) => {
     contacts: [],
   });
 
-  const { handleAlert } = useAlertContext();
-
   useEffect(() => {
     const fetchContacts = async () => {
       try {
@@ -67,11 +72,15 @@ export const ContactContextProvider = ({ children }: any) => {
         delete data.results;
         setContactList({ ...data, contacts: results });
       } catch (error) {
-        handleAlert({
-          message: 'Internal error',
-          type: 'error',
-          show: true,
-        });
+        dispatch(
+          showAlert({
+            message: 'Internal error',
+            type: AlertType.ERROR,
+            show: true,
+          })
+        );
+
+        handleTimeoutAlert(4);
       }
       setIsLoading(false);
     };
@@ -90,11 +99,15 @@ export const ContactContextProvider = ({ children }: any) => {
       delete data.results;
       setContactList({ ...data, contacts: results });
     } catch (error) {
-      handleAlert({
-        message: 'Internal error',
-        type: 'error',
-        show: true,
-      });
+      dispatch(
+        showAlert({
+          message: 'Internal error',
+          type: AlertType.ERROR,
+          show: true,
+        })
+      );
+
+      handleTimeoutAlert(4);
     }
     setIsLoading(false);
   };
@@ -126,6 +139,16 @@ export const ContactContextProvider = ({ children }: any) => {
       }}
     >
       {children}
+      {alert.show && (
+        <>
+          <Alert
+            severity={alert.type}
+            sx={{ position: 'absolute', bottom: '20px', right: '20px' }}
+          >
+            {alert.message}
+          </Alert>
+        </>
+      )}
     </ContactContext.Provider>
   );
 };

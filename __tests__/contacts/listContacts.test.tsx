@@ -3,6 +3,8 @@ import Contacts from '../../pages/contacts';
 import { useRouter } from 'next/router';
 import { ContactContextProvider } from '../../context/ContactContext';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import store from '../../context/state/store';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -16,9 +18,11 @@ describe('Contacs Page', () => {
     }));
 
     render(
-      <ContactContextProvider>
-        <Contacts />
-      </ContactContextProvider>
+      <Provider store={store}>
+        <ContactContextProvider>
+          <Contacts />
+        </ContactContextProvider>
+      </Provider>
     );
 
     //checking some rows to be in the document
@@ -44,9 +48,11 @@ describe('Contacs Page', () => {
     }));
 
     render(
-      <ContactContextProvider>
-        <Contacts />
-      </ContactContextProvider>
+      <Provider store={store}>
+        <ContactContextProvider>
+          <Contacts />
+        </ContactContextProvider>
+      </Provider>
     );
 
     //include the header and footer row
