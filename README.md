@@ -31,20 +31,35 @@
 
 ## About the app
 
-The Backbone challenge is a web app where an use can manage contacts. 
-The actions that can be perform in the app are:
+The Backbone challenge is a web app where a user can manage contacts. 
+The actions that can be performed in the app are:
 
 - View all contacts
-- Filter by email (**at least 3 character needed**)
+- Filter by email (**at least 3 characters needed**)
 - Create a new contact
 - Edit an existing contact
 - Delete an existing contact
 
-**Some flows in the app was tested with Jest and React-Testing-Library**
+Some flows in the app were **tested with Jest and React-Testing-Library**
 
-### How I take the challenge
+For the **state management** I used:
+* React Context:
+  * List of Contacts
+  * Single Contact to view/edit/delete
+  * Filter text
+  * Rows and page displayed
+  
+* Redux State:
+  * Alert state
 
-To understand all the requirements I made a google document to write all the technical and the functional requirements. Once I got the basics of the project, I started to learn about the `api` that I had to use, some notes I taked from the documentation and made my document more robust.
+**Custom Hooks**
+* useTimeout: manage the state of an alert, when invoked this set a timeout to hide the alert 
+
+
+
+### How I took the challenge
+
+To understand all the requirements I made a google document to write all the technical and the functional requirements. Once I got the basics of the project, I started to learn about the `api` that I had to use, some notes I took from the documentation and made my document more robust.
 
 Here is the [Google document](https://docs.google.com/document/d/1PNtYtnI8BN02sw4LnjxcSxrQwIBfGm3Z0yFcWgV0-i4/edit?usp=sharing) if you wanna check it out.
 
@@ -132,27 +147,27 @@ _Here are some steps and instructions to setting up your project locally. To get
 ### Create contact
 #### /contacts/create
 
-- This page create a single contact.
+- This page creates a single contact.
     - **First Name**: *required*
     - **Last Name**: *required*
     - **Phone**: *required, only number, max length 10*
     - **Email**: *required, valid email*
     
     
-* The endpoint check if the phone or email is alredy taked
+* The endpoint checks if the phone or email is alredy taken
 * An Alert will display if something went wrong
 
 ### Edit contact
 #### /contacts/[id]/edit
 
-- This page update a single contact. 
+- This page updates a single contact. 
     - **First Name**: *required*
     - **Last Name**: *required*
     - **Phone**: *required, only number, max length 10*
     - **Email**: *required, valid email*
 
 - If nothing was changed, the contact will not be modified
-* The endpoint check if the phone or email is alredy taked
+* The endpoint checks if the phone or email is already taken
 * An Alert will display if something went wrong
 
 ### Delete contact
