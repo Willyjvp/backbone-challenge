@@ -9,7 +9,8 @@ import { useAppDispatch } from '../../../context/state/hooks';
 import { useTimeoutAlert } from '../../../hooks/useTimeout';
 
 const EditContact = () => {
-  const { singleContact, handleFilter } = useContactContext();
+  const { singleContact, handleFilter, setStateFilterText } =
+    useContactContext();
   const dispatch = useAppDispatch();
   const [handleTimeoutAlert] = useTimeoutAlert();
 
@@ -64,6 +65,7 @@ const EditContact = () => {
 
         handleTimeoutAlert(3);
 
+        setStateFilterText('');
         handleFilter('');
 
         router.push('/contacts');

@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../context/state/hooks';
 import { useTimeoutAlert } from '../../hooks/useTimeout';
 
 const CreateContact = () => {
-  const { handleFilter } = useContactContext();
+  const { handleFilter, setStateFilterText } = useContactContext();
   const [handleTimeoutAlert] = useTimeoutAlert();
   const dispatch = useAppDispatch();
 
@@ -35,9 +35,10 @@ const CreateContact = () => {
         );
 
         handleTimeoutAlert(3);
-
+        
+        setStateFilterText('');
         handleFilter('');
-
+        
         Router.push('/contacts');
       } catch (error) {
         const err = error as AxiosError;
